@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>test payment</title>
+</head>
+<html>
+<body>
+    <h1>Process Payment</h1>
+    <p>order id: {{ order_id }}</p>
+    <p>amount: {{ amount }}</p>
+    <p>currency: {{ currency }}</p>
+    <p>language: {{ language }}</p>
+    <p>signature: {{ signature }}</p>
+    <form action="{{ ogone_url }}" method="post">
+        <input type="hidden" name="PSPID" value="{{ pspid }}">
+        <input type="hidden" name="orderID" value="{{ order_id }}">
+        <input type="hidden" name="amount" value="{{ amount }}">
+        <input type="hidden" name="currency" value="{{ currency }}">
+        <input type="hidden" name="language" value="{{ language }}">
+        <!-- sha1_signature -->
+        <input type="hidden" name="SHASign" value="{{ signature }}">
+        <!-- lay out information -->
+        <input type="hidden" name="TITLE" value="{{ title }}">
+        <input type="hidden" name="BGCOLOR" value="{{ bgcolor }}"> 
+        <input type="hidden" name="TXTCOLOR" value="{{ txtcolor }}"> 
+        <input type="hidden" name="TBLBGCOLOR" value="{{ tblbgcolor }}"> 
+        <input type="hidden" name="TBLTXTCOLOR" value="{{ tbltxtcolor }}"> 
+        <input type="hidden" name="BUTTONBGCOLOR" value="{{ buttonbgcolor }}"> 
+        <input type="hidden" name="BUTTONTXTCOLOR" value="{{ buttontxtcolor }}"> 
+        <input type="hidden" name="LOGO" value="{{ logo }}"> 
+        <input type="hidden" name="FONTTYPE" value="{{ fonttype }}"> 
+        <!-- or dynamic template page -->
+        <input type="hidden" name="TP" value="{{ template }}">
+        <!-- post-payment redirection -->
+        <input type="hidden" name="accepturl" value="{{ accept_url }}">
+        <input type="hidden" name="declineurl" value="{{ decline_url }}">
+        <input type="hidden" name="exceptionurl" value="{{ exception_url }}">
+        <input type="hidden" name="cancelurl" value="{{ cancel_url }}">
+        <!-- miscellanous -->
+        <input type="hidden" name="COM" value="{{ order_description }}">
+        <input type="hidden" name="CN" value="{{ customer_name }}">
+        <input type="hidden" name="EMAIL" value="{{ email }}">
+        <input type="hidden" name="PM" value="">
+        <input type="hidden" name="BRAND" value="">
+        <input type="hidden" name="ownerZIP" value="{{ zip }}">
+        <input type="hidden" name="owneraddress" value="{{ address }}">
+
+        <input type="submit" value="submit">
+    </form>    
+<body>
+</html>
