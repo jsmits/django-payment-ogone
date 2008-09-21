@@ -7,10 +7,9 @@ PROD_URL = getattr(settings, "OGONE_PROD_URL",
     "https://secure.ogone.com/ncol/prod/orderstandard.asp")
 PRODUCTION = getattr(settings, "OGONE_PRODUCTION", False)
 
-# PSPID = 'jhmsmits'
 LANGUAGE = 'nl_NL'
 # LANGUAGE = 'en_US'
 CURRENCY = 'EUR'
 
-SHA1_PRE_SECRET = '%vvvzrzq(&9gh6m1+966'
-SHA1_POST_SECRET = 'p%74z(mbrj%)rii$60_g'
+SHA1_PRE_SECRET = getattr(settings, "OGONE_SHA1_PRE_SECRET", 'dummy_pre_secret')
+SHA1_POST_SECRET = getattr(settings, "OGONE_SHA1_POST_SECRET", 'dummy_post_secret')
