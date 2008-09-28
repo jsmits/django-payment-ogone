@@ -2,6 +2,7 @@
 
 /*.db
 /*.py
+/*.tmproj
 
 # Mac OS X specific
 .DS_Store

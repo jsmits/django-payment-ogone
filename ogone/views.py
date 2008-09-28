@@ -18,6 +18,7 @@ from ogone.models import Order, OrderStatus
 from ogone.conf import settings
 from ogone.utils import get_action, order_request
 from ogone import signals
+from ogone.utils import create_ogone_order
 
 def get_order_id():
     now = datetime.now()
@@ -31,7 +32,8 @@ def test_form3(request):
             amount = form.cleaned_data['amount']
             currency = form.cleaned_data['currency']
             language = form.cleaned_data['language']
-            order_form_data = order_request(order_id, amount, currency, language=language)
+            order = create_ogone_order(order_id, amount, currency, language)
+            order_form_data = order_request(order)
             return render_to_response('ogone/base_form.html', {
                 'form': order_form_data['form'], 'action': order_form_data['action'], 
                 'header': 'Process Payment', 'title': 'test payment'})
@@ -40,16 +42,27 @@ def test_form3(request):
     return render_to_response('ogone/test_payment.html', {'form': form})
 
 # @login_required
-def ogone(request, amount=1250, currency='EUR'):
-    order_id = get_order_id()
-    order_form_data = order_request(order_id, amount, currency, user=request.user)
+def ogone(request, amount=1250, order_id=None, currency='EUR', order=None):
+    order_id = order_id or get_order_id()
+    order = order or get_object_or_404(Order, order_id=order_id)
+    order_form_data = order_request(order)
     return render_to_response('ogone/to_ogone_form.html', {
         'form': order_form_data['form'], 'action': order_form_data['action'], 
         'header': '', 'title': ''})
+        
+def to_ogone(request):
+    order_id = request.GET.get('order_id')
+    order = get_object_or_404(Order, order_id=order_id)
+    print order.amount
+    print order_id
+    return ogone(request, amount=order.amount, order_id=order_id, order=order)
+    # return HttpResponse("order_id: %s" % order_id)
 
 @require_http_methods(["POST", "GET"])
 def order_status_update(request):
     params = request.POST or request.GET
+    if not params: 
+        return HttpResponse("no params")
     order_id = params.get('orderID')
     amount = Decimal(params.get('amount'))
     currency = params.get('currency')
@@ -80,8 +93,8 @@ def order_status_update(request):
         order_status.save()
         if status == 9: # authorized and accepted
             # send ogone_payment_accepted signal
-            signals.ogone_payment_accepted.send(order_id=order_id, 
+            signals.ogone_payment_accepted.send(sender=OrderStatus, order_id=order_id, 
                 amount=amount * 100, currency=currency)
-        return HttpResponse("accepted")
+    return HttpResponse("order_status_update processed")
     
         

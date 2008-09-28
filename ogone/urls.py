@@ -10,4 +10,6 @@ urlpatterns = patterns('ogone.views',
     url(r'^declined/', 'declined'),
     url(r'^exception/', 'exception'),
     url(r'^cancelled/', 'order_status_update'),
+    
+    url(r'^to_ogone/$', 'to_ogone'),
 )

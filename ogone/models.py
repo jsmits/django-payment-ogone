@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 
 class Order(models.Model):
     """Order request."""
-    user = models.ForeignKey(User, null=True)
     order_id = models.CharField(max_length=20)
     currency = models.CharField(blank=True, max_length=5)
     amount = models.IntegerField(blank=True, null=True)
@@ -25,7 +24,7 @@ class OrderStatus(models.Model):
     amount = models.DecimalField(blank=True, null=True, decimal_places=2, max_digits=10)
     currency = models.CharField(blank=True, max_length=5)
     payment_method = models.CharField(blank=True, null=True, max_length=30)
-    acceptance = models.IntegerField(blank=True, null=True)
+    acceptance = models.CharField(blank=True, null=True, max_length=15)
     status = models.IntegerField(blank=True, null=True)
     card_number = models.CharField(blank=True, null=True, max_length=30)
     pay_id = models.CharField(blank=True, null=True, max_length=10)
