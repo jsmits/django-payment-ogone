@@ -10,6 +10,16 @@ def get_action():
         return settings.TEST_URL
 
 def order_request(order, language=settings.LANGUAGE):
+    pm = ''
+    brand = ''
+    if order.payment_method:
+        if order.payment_method.lower() == 'ideal':
+            pm = 'ideal'
+            brand = ''
+        elif order.payment_method.lower() in ['mastercard', 'visa']:
+            pm = 'creditcard'
+            brand = order.payment_method.lower()
+    
     init_data = {
         'orderID': order.order_id,
         'amount': order.amount,
@@ -18,24 +28,21 @@ def order_request(order, language=settings.LANGUAGE):
         'SHASign': order.signature,
         'accepturl': 'http://localhost:8000/checkout/ogone/accepted', # make this a reverse lookup?
         'cancelurl': 'http://localhost:8000/checkout/ogone/accepted',
-        # 'PM': 'CreditCard',
-        # 'PM': 'ideal',
-        # 'BRAND': 'VISA',
-        # 'PM': 'paypal',
+        'PM': pm,
+        'BRAND': brand,
     }
-    print init_data
+    
     form = DynOgoneForm(initial_data=init_data, auto_id=False)
     return {'action': get_action(), 'form': form}
     
-def create_ogone_order(order_id, amount, currency, language=settings.LANGUAGE):
-    print "secret: %s" % settings.SHA1_PRE_SECRET
-    print "create ogone order, id: %s" % order_id
+def create_ogone_order(order_id, amount, currency, payment_method=None, language=settings.LANGUAGE):
     hash = create_hash(order_id, amount, currency, settings.PSPID, 
         settings.SHA1_PRE_SECRET)
     order = Order()
     order.order_id = order_id
-    order.amount = amount
     order.currency = currency
+    order.amount = amount
+    order.payment_method = payment_method
     order.signature = hash
     order.save()
     return order
