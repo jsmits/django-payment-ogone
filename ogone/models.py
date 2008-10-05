@@ -6,6 +6,7 @@ class Order(models.Model):
     order_id = models.CharField(max_length=20)
     currency = models.CharField(blank=True, max_length=5)
     amount = models.IntegerField(blank=True, null=True)
+    payment_method = models.CharField(blank=True, null=True, max_length=20)
     signature = models.CharField(blank=True, null=True, max_length=40)
     date_added = models.DateTimeField(auto_now_add=True)
     
