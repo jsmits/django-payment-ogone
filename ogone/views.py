@@ -28,7 +28,7 @@ class InvalidSignatureException(Exception):
 class InvalidParamsException(Exception):
     pass
 
-def get_order_id():
+def get_test_order_id():
     now = datetime.now()
     return now.strftime("%Y%m%d%H%M%S")
 
@@ -36,7 +36,7 @@ def test_form3(request):
     if request.method == 'POST':
         form = TestPaymentForm(request.POST)
         if form.is_valid():
-            order_id = get_order_id()
+            order_id = get_test_order_id()
             amount = form.cleaned_data['amount']
             currency = form.cleaned_data['currency']
             language = form.cleaned_data['language']
@@ -51,7 +51,7 @@ def test_form3(request):
 
 # @login_required
 def ogone(request, amount=1250, order_id=None, currency='EUR', order=None):
-    order_id = order_id or get_order_id()
+    order_id = order_id or get_test_order_id()
     order = order or get_object_or_404(Order, order_id=order_id)
     order_form_data = order_request(order)
     return render_to_response('ogone/to_ogone_form.html', {
