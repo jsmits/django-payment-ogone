@@ -110,13 +110,13 @@ def order_status_update(request):
             signals.ogone_payment_accepted.send(sender=OrderStatus, order_id=order_id, 
                 amount=Decimal(amount) * 100, currency=currency)
             # return the appropiate response
-            return HttpResponse("your payment has been accepted")
+            return render_to_response('ogone/payment_accepted.html')
         # cancelled
-        elif status == u'1': 
-            return HttpResponse("your payment request has been cancelled")
+        elif status == u'1':
+            return render_to_response('ogone/payment_cancelled.html')
         elif int(status) in [0,2,4,41,5,51,52,59,6,61,62,63,7,71,72,73,74,75,
             8,81,82,83,84,85,91,92,93,94,95,97,98,99]:
-            return HttpResponse("payment has not been processed")
+            return render_to_response('ogone/payment_not_processed.html')
         else:
             # mail_admins
             subject = 'Error (%s IP): %s' % ((request.META.get('REMOTE_ADDR') in settings.INTERNAL_IPS and 'internal' or 'EXTERNAL'), request.path)
@@ -124,10 +124,10 @@ def order_status_update(request):
                 request_repr = repr(request)
             except:
                 request_repr = "Request repr() unavailable"
-            # message = "Unknown ogone status code: %s\n\n%s" % (status, request_repr)
+            message = "Unknown ogone status code: %s\n\n%s" % (status, request_repr)
             mail_admins(subject, message, fail_silently=True)
-            return HttpResponse("payment has not been processed")
+            return render_to_response('ogone/payment_not_processed.html')
     else:
-        return HttpResponse("payment has not been processed")
+        return render_to_response('ogone/payment_not_processed.html')
     
         
