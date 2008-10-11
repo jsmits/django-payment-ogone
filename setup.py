@@ -26,20 +26,21 @@ for dirpath, dirnames, filenames in os.walk('ogone'):
 
 setup(
 	name='ogone',
-	version='0.1-git',
-	description='django-ogone provides an interface to Ogone, an online payment service provider',
+	version='0.1',
+	description='Django application for interfacing with Ogone (payment service provider)',
 	author='Sander Smits',
 	author_email='Sander Smits <jhmsmits@gmail.com>',
-	url='http://github.com/jsmits/django-payment-ogone/tree/master/',
-	packages = packages,
-    package_data = {'ogone': data_files,},
+	url='http://github.com/jsmits/django-payment-ogone/',
+	package_dir={'ogone': 'ogone'},
+    packages=packages,
+    package_data={'ogone': data_files},
 	classifiers=[
 		'Development Status :: 4 - Beta',
-              	'Environment :: Web Environment',
-                'Intended Audience :: Developers',
-                'License :: OSI Approved :: MIT License',
-                'Operating System :: OS Independent',
-                'Programming Language :: Python',
-                'Topic :: Utilities',
+        'Environment :: Web Environment',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Topic :: Utilities',
 	]
 )
