@@ -1,8 +1,11 @@
 *.pyc
 
 /*.db
-/*.py
+/manage.py
+/settings.py
+/__init__.py
 /*.tmproj
+/build
 
 # Mac OS X specific
 .DS_Store

@@ -1,3 +1,4 @@
+"""
 Status of the payment.
 
 See: https://secure.ogone.com/ncol/param_cookbook.asp?CSRFSP=%2Fncol%2Ftest%2Fdownload_docs.asp&CSRFKEY=2FA1BDB2690AAD330CAEF5B9F2F7AC73A44FA90A&CSRFTS=20081004115228
@@ -54,3 +55,4 @@ Statuses in 2 digits correspond either to 'intermediary' situations or to abnorm
     * 3, this means the payment processing (capture or cancellation) was refused by the acquirer whilst the payment had been authorised beforehand. It can be due to a technical error or to the expiration of the authorisation. You must therefore call the acquirer's helpdesk to find out the actual result of this transaction.
     * 4, this means our system has been notified the transaction was rejected well after the transaction was sent to your acquirer.
     * 5, this means our system hasn’t sent the requested transaction to the acquirer since the merchant will send the transaction to the acquirer himself, like he specified in his configuration.
+"""
