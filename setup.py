@@ -19,7 +19,6 @@ for dirpath, dirnames, filenames in os.walk('ogone'):
             pkg = pkg.replace(os.path.altsep, '.')
         packages.append(pkg)
     elif filenames:
-        print dirpath, filenames
         prefix = dirpath[6:] # Strip "ogone/" or "ogone\"
         for f in filenames:
             data_files.append(os.path.join(prefix, f))
