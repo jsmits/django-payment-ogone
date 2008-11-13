@@ -36,8 +36,10 @@ class OgoneForm(forms.Form):
     amount = forms.CharField(widget=forms.HiddenInput)
     currency = forms.CharField(widget=forms.HiddenInput)
     language = forms.CharField(widget=forms.HiddenInput)
+    
     # sha1_signature
     SHASign = forms.CharField(widget=forms.HiddenInput)
+    
     # lay out information
     TITLE = forms.CharField(widget=forms.HiddenInput)
     BGCOLOR = forms.CharField(widget=forms.HiddenInput)
@@ -48,13 +50,16 @@ class OgoneForm(forms.Form):
     BUTTONTXTCOLOR = forms.CharField(widget=forms.HiddenInput)
     LOGO = forms.CharField(widget=forms.HiddenInput)
     FONTTYPE = forms.CharField(widget=forms.HiddenInput)
+    
     # dynamic template page
     TP = forms.CharField(widget=forms.HiddenInput)
+    
     # post-payment redirection
     accepturl = forms.CharField(widget=forms.HiddenInput)
     declineurl = forms.CharField(widget=forms.HiddenInput)
     exceptionurl = forms.CharField(widget=forms.HiddenInput)
     cancelurl = forms.CharField(widget=forms.HiddenInput)
+
     # miscellaneous
     COM = forms.CharField(widget=forms.HiddenInput)
     CN = forms.CharField(widget=forms.HiddenInput)
@@ -64,9 +69,11 @@ class OgoneForm(forms.Form):
     ownerZIP = forms.CharField(widget=forms.HiddenInput)
     owneraddress = forms.CharField(widget=forms.HiddenInput)
     
+    homeurl = forms.CharField(widget=forms.HiddenInput)
+    catalogurl = forms.CharField(widget=forms.HiddenInput)
+    
     def __init__(self, initial_data, *args, **kwargs):
         super(OgoneForm, self).__init__(*args, **kwargs)
-        # forms.Form.__init__(self, *args, **kwargs)
         for name, value in initial_data.items():
             self.fields[name].initial = value
             

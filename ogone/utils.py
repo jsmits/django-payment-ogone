@@ -26,8 +26,13 @@ def order_request(order, language=settings.LANGUAGE):
         'currency': order.currency,
         'language': language,
         'SHASign': order.signature,
-        'accepturl': 'http://localhost:8000/checkout/ogone/accepted', # make this a reverse lookup?
-        'cancelurl': 'http://localhost:8000/checkout/ogone/accepted',
+        # URLs need an appended slash!
+        'accepturl': 'http://localhost:8000/checkout/ogone/accepted/', # make this a reverse lookup?
+        'cancelurl': 'http://localhost:8000/checkout/ogone/status/',
+        # 'declineurl': 'http://localhost:8000/checkout/ogone/status/',
+        # 'exceptionurl': 'http://localhost:8000/checkout/ogone/status/',
+        'homeurl': 'NONE', # needed to remove the 'back to web shop' button
+        'catalogurl': 'NONE', # needed to remove the 'back to web shop' button
         'PM': pm,
         'BRAND': brand,
     }
